@@ -1,0 +1,5 @@
+framework,latency_mean_ms,latency_p99_ms,throughput_tok_per_sec,ttft_ms,peak_memory_mb,gpu_util_mean_pct,power_draw_mean_w,compile_time_sec,num_graph_breaks
+eager,21083.49,21515.29,23.6,1097.54,5032.56,0.0,0.0,0.0,0
+compile_default,18567.43,18830.78,26.89,977.62,5412.56,0.0,0.0,48.6,3
+compile_reduce_overhead,17246.76,17566.19,28.84,916.49,5612.56,0.0,0.0,71.3,3
+compile_max_autotune,16421.18,16823.58,30.27,878.46,5752.56,0.0,0.0,198.5,3
