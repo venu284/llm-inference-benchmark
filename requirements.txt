@@ -1,0 +1,21 @@
+# LLM Inference Benchmarking - Dependencies
+# CSCI 8970 | Spring 2026
+
+# Core ML
+torch>=2.2.0
+transformers>=4.38.0
+
+# TensorRT (install separately based on CUDA version)
+# torch-tensorrt  # pip install torch-tensorrt
+
+# Data & Visualization
+numpy>=1.24.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Configuration
+pyyaml>=6.0
+
+# Utilities
+tqdm>=4.65.0

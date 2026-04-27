@@ -1,0 +1,56 @@
+# ============================================================
+# LLM Inference Benchmarking - Experiment Configuration
+# CSCI 8970 - Spring 2026
+# Authors: Venu Dattathreya Vemuru, Varshith Peddineni
+# ============================================================
+
+model:
+  name: "mistralai/Mistral-7B-v0.1"
+  precision: "4bit"                     # NF4 quantization (~5 GB VRAM)
+  max_new_tokens: 128                  # tokens to generate per run
+  trust_remote_code: false
+
+frameworks:
+  - name: "eager"
+    description: "PyTorch default eager execution - no optimization"
+  
+  - name: "compile_default"
+    description: "torch.compile with default mode"
+    compile_mode: "default"
+  
+  - name: "compile_reduce_overhead"
+    description: "torch.compile with reduce-overhead mode (CUDA graphs)"
+    compile_mode: "reduce-overhead"
+  
+  - name: "compile_max_autotune"
+    description: "torch.compile with max-autotune mode (kernel benchmarking)"
+    compile_mode: "max-autotune"
+  
+  - name: "tensorrt"
+    description: "TensorRT via Torch-TensorRT with FP16"
+    enabled_precisions: ["float16"]
+    fallback_to_pytorch: true          # allow subgraph fallback
+
+experiment:
+  batch_sizes: [1, 4, 8]              # 1=interactive, 4=small serve, 8=throughput
+  seq_lengths: [256, 512, 1024]        # short, medium, long prompts
+  warmup_runs: 5                       # discarded warm-up iterations
+  measured_runs: 30                    # measured iterations per config
+  seed: 42                             # fixed seed for reproducibility
+
+monitoring:
+  gpu_poll_interval_ms: 200            # nvidia-smi polling frequency
+  log_power: true                      # record power draw (watts)
+  log_memory: true                     # record GPU memory usage
+  log_utilization: true                # record GPU utilization %
+
+output:
+  results_dir: "results/"
+  figures_dir: "figures/"
+  csv_filename: "benchmark_results.csv"
+
+hardware:
+  gpu: "NVIDIA RTX 3090"
+  vram_gb: 24
+  machine: "cuda1.cs.uga.edu"
+  cuda_version: "12.2"
